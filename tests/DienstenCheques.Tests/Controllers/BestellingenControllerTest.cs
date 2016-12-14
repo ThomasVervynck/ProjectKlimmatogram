@@ -99,20 +99,27 @@ namespace DienstenCheques.Tests.Controllers
             _mockGebruikersRepository.Verify(m => m.SaveChanges(), Times.Once());
         }
 
-        [Fact(Skip="Not yet implemented")]
+        [Fact]
         public void NieuwPostShouldNotAddBestellingWhenNotSuccessfull()
         {
-
+            _controller.Nieuw(_jan, _modelMetFout);
+            Assert.Equal(3, _jan.Bestellingen.Count);
+            _mockGebruikersRepository.Verify(m => m.SaveChanges(), Times.Never);
         }
 
-        [Fact(Skip = "Not yet implemented")]
+        [Fact]
         public void NieuwPostShouldPassNieuwViewModelToViewWhenNotSuccessfull()
         {
-
+            ViewResult result = _controller.Nieuw(_jan, _modelMetFout) as ViewResult;
+            NieuwViewModel nieuwViewModel = (NieuwViewModel)result?.Model;
+            Assert.Equal(70, nieuwViewModel?.AantalCheques);
+            Assert.Equal(DateTime.Today, nieuwViewModel?.DebiteerDatum);
+            Assert.Equal(true, nieuwViewModel?.Elektronisch);
+            Assert.Equal(9.0M, nieuwViewModel?.Zichtwaarde);
         }
 
         #endregion
 
-     
+
     }
 }
