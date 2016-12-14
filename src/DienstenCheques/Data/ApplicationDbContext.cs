@@ -40,7 +40,17 @@ namespace DienstenCheques.Data
 
         private static void MapGebruiker(EntityTypeBuilder<Gebruiker> g)
         {
-           throw new NotImplementedException();
+            g.ToTable("Gebruiker");
+            //Properties
+            g.HasKey(t => t.GebruikersNummer);
+            g.Property(t => t.Naam).IsRequired().HasMaxLength(100);
+            g.Property(t => t.Voornaam).IsRequired().HasMaxLength(100);
+            g.Property(t => t.Email).IsRequired().HasMaxLength(100);
+            //Relationships
+            g.HasMany(t => t.Bestellingen).WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
+            g.HasMany(t => t.Prestaties).WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
+            g.HasMany(t => t.Portefeuille).WithOne().IsRequired().OnDelete(DeleteBehavior.Restrict);
+
         }
 
         private static void MapDienstenCheque(EntityTypeBuilder<DienstenCheque> d)
