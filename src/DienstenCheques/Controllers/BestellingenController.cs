@@ -30,6 +30,8 @@ namespace DienstenCheques.Controllers
                 AantalOpenstaandePrestatieUren = gebruiker.AantalOpenstaandePrestatieUren,
                 AantalMaanden = aantalMaanden
             };
+            if (Request != null && Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return PartialView("_Bestelling", vm.Bestellingen);
             return View(vm);
         }
 
