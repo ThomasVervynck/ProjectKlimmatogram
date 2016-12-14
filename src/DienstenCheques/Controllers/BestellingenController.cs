@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DienstenCheques.Controllers
 {
     [ServiceFilter(typeof(GebruikerFilter))]
+    [Authorize(Policy = "customer")]
     public class BestellingenController : Controller
     {
         private readonly IGebruikersRepository _gebruikersRepository;
